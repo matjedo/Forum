@@ -2,123 +2,188 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>MatjSMP • Loja</title>
+<title>MatjSMP • Loja Oficial</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
 <style>
-:root {
-  --bg:#0f172a;
+:root{
+  --bg:#0b1220;
   --card:#111827;
   --accent:#22c55e;
+  --accent2:#3b82f6;
   --text:#e5e7eb;
   --muted:#9ca3af;
   --danger:#7f1d1d;
 }
 
-body {
+*{box-sizing:border-box}
+
+body{
   margin:0;
-  font-family:Arial, sans-serif;
-  background:var(--bg);
+  font-family:'Inter',sans-serif;
+  background:radial-gradient(circle at top,#1e293b,var(--bg));
   color:var(--text);
 }
 
-nav {
+/* NAVBAR */
+nav{
+  position:sticky;
+  top:0;
+  z-index:10;
   display:flex;
   justify-content:space-between;
-  padding:1rem;
-  background:#020617;
+  align-items:center;
+  padding:1rem 2rem;
+  background:rgba(2,6,23,.9);
+  backdrop-filter:blur(8px);
 }
 
-nav button {
+nav strong{
+  font-size:1.2rem;
+}
+
+nav button{
   background:none;
   border:none;
   color:var(--text);
+  font-weight:600;
   cursor:pointer;
-  font-weight:bold;
+  margin-left:1rem;
 }
 
-nav button:hover {
+nav button:hover{color:var(--accent)}
+
+/* PAGES */
+.page{
+  display:none;
+  max-width:1100px;
+  margin:0 auto;
+  padding:3rem 1.5rem;
+}
+
+.page.active{display:block}
+
+h1{
+  text-align:center;
+  margin-bottom:2rem;
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:1.5rem;
+}
+
+/* CARDS */
+.card{
+  background:rgba(17,24,39,.9);
+  border-radius:18px;
+  padding:1.5rem;
+  box-shadow:0 20px 40px rgba(0,0,0,.4);
+  transition:.25s;
+}
+
+.card:hover{transform:translateY(-4px)}
+
+.card h3{
+  margin-top:0;
   color:var(--accent);
 }
 
-.page {
-  display:none;
-  padding:2rem;
-}
-
-.page.active {
-  display:block;
-}
-
-.cards {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:1rem;
-}
-
-.card {
-  background:var(--card);
-  padding:1rem;
-  border-radius:12px;
-}
-
-.card button {
-  margin-top:.5rem;
-  padding:.4rem 1rem;
-  border:none;
+/* BUTTONS */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:.5rem 1.2rem;
   border-radius:999px;
-  background:var(--accent);
-  font-weight:bold;
+  border:none;
+  font-weight:700;
   cursor:pointer;
+  background:linear-gradient(135deg,var(--accent),#16a34a);
+  color:#022c22;
 }
 
-.card button.disabled {
+.btn.disabled{
   background:#374151;
+  color:#9ca3af;
   cursor:not-allowed;
 }
 
-.cart-item {
+/* INPUT */
+input{
+  width:100%;
+  padding:.7rem 1rem;
+  border-radius:12px;
+  border:1px solid #1f2937;
+  background:#020617;
+  color:var(--text);
+  font-size:.95rem;
+}
+
+input:focus{
+  outline:none;
+  border-color:var(--accent);
+}
+
+/* CART */
+.cart-bar{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:var(--accent2);
+  color:white;
+  border-radius:999px;
+  padding:.6rem 1rem;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 10px 25px rgba(0,0,0,.4);
+}
+
+/* CART ITEMS */
+.cart-item{
   display:flex;
   justify-content:space-between;
+  padding:.4rem 0;
+  border-bottom:1px solid #1f2937;
 }
 
-.skin {
-  width:64px;
-  height:64px;
-  border-radius:8px;
-  margin-top:.5rem;
+/* SKIN */
+.skin{
+  width:80px;
+  height:80px;
+  border-radius:12px;
+  margin:1rem auto;
+  display:block;
 }
 
-.modal {
+/* MODAL */
+.modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.6);
+  background:rgba(0,0,0,.65);
   display:none;
   align-items:center;
   justify-content:center;
 }
 
-.modal-content {
+.modal-box{
   background:var(--danger);
-  padding:1.5rem;
-  border-radius:12px;
-  max-width:300px;
+  padding:2rem;
+  border-radius:18px;
+  max-width:320px;
   text-align:center;
-}
-
-.modal-content button {
-  margin-top:1rem;
-  padding:.4rem 1rem;
-  border:none;
-  font-weight:bold;
-  cursor:pointer;
+  box-shadow:0 20px 40px rgba(0,0,0,.5);
 }
 </style>
 </head>
 <body>
 
 <nav>
-  <strong>MatjSMP</strong>
+  <strong>🌍 MatjSMP</strong>
   <div>
     <button onclick="openPage('home')">Home</button>
     <button onclick="openPage('store')">Loja</button>
@@ -127,100 +192,89 @@ nav button:hover {
 </nav>
 
 <!-- HOME -->
-<div class="page active" id="home">
+<section id="home" class="page active">
   <h1>📰 Notícias</h1>
-  <p>✅ Novo IP</p>
-  <p>🎉 Eventos em breve</p>
-</div>
-
-<!-- LOJA -->
-<div class="page" id="store">
-  <h1>🛒 Loja</h1>
-  <div class="cards">
+  <div class="grid">
     <div class="card">
-      <h3>Beta</h3>
-      <button onclick="addItem(this,'Beta')">Adicionar</button>
+      <h3>🚀 Novo IP</h3>
+      <p>Servidor atualizado com nova host paga.</p>
     </div>
     <div class="card">
-      <h3>Diamante</h3>
-      <button onclick="addItem(this,'Diamante')">Adicionar</button>
-    </div>
-    <div class="card">
-      <h3>VIP</h3>
-      <button onclick="addItem(this,'VIP')">Adicionar</button>
-    </div>
-    <div class="card">
-      <h3>MATJ</h3>
-      <button onclick="addItem(this,'MATJ')">Adicionar</button>
+      <h3>🎉 Eventos</h3>
+      <p>Eventos semanais com prêmios exclusivos.</p>
     </div>
   </div>
-</div>
+</section>
 
-<!-- CARRINHO -->
-<div class="page" id="cart">
+<!-- STORE -->
+<section id="store" class="page">
+  <h1>🛒 Loja Oficial</h1>
+  <div class="grid">
+    <div class="card"><h3>Beta</h3><button class="btn" onclick="add(this,'Beta')">Adicionar</button></div>
+    <div class="card"><h3>Diamante</h3><button class="btn" onclick="add(this,'Diamante')">Adicionar</button></div>
+    <div class="card"><h3>VIP</h3><button class="btn" onclick="add(this,'VIP')">Adicionar</button></div>
+    <div class="card"><h3>MATJ</h3><button class="btn" onclick="add(this,'MATJ')">Adicionar</button></div>
+  </div>
+</section>
+
+<!-- CART -->
+<section id="cart" class="page">
   <h1>🧺 Carrinho</h1>
 
-  <div id="cartList"></div>
+  <div class="card">
+    <div id="cartList"></div>
 
-  <h3>Nick do Minecraft</h3>
-  <input id="nick" placeholder="Seu nick" oninput="updateSkin()">
+    <h3 style="margin-top:1rem">Nick do Minecraft</h3>
+    <input id="nick" placeholder="Seu nick" oninput="skin()">
+    <img id="skin" class="skin">
 
-  <br>
-  <img id="skin" class="skin">
+    <button class="btn" style="width:100%;margin-top:1rem" onclick="pay()">Prosseguir com pagamento</button>
+  </div>
+</section>
 
-  <br><br>
-  <button onclick="pay()">Prosseguir com pagamento</button>
-</div>
+<div class="cart-bar" onclick="openPage('cart')">🛒 Carrinho</div>
 
-<!-- MODAL -->
 <div class="modal" id="modal">
-  <div class="modal-content">
-    <h3>🚧 Manutenção</h3>
+  <div class="modal-box">
+    <h3>🚧 Em manutenção</h3>
     <p>O sistema de pagamento está temporariamente indisponível.</p>
-    <button onclick="closeModal()">OK</button>
+    <button class="btn" onclick="closeModal()">OK</button>
   </div>
 </div>
 
 <script>
-let cart = {};
+let cart={};
 
-function openPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+function openPage(p){
+  document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
+  document.getElementById(p).classList.add('active');
 }
 
-function addItem(btn,item){
+function add(btn,item){
   cart[item]=(cart[item]||0)+1;
   btn.classList.add('disabled');
   btn.disabled=true;
-  renderCart();
+  render();
 }
 
-function renderCart(){
-  const div=document.getElementById('cartList');
-  div.innerHTML='';
+function render(){
+  const c=document.getElementById('cartList');
+  c.innerHTML='';
   Object.keys(cart).forEach(i=>{
     const d=document.createElement('div');
     d.className='cart-item';
-    d.innerHTML=`<span>${i}</span><span>x${cart[i]}</span>`;
-    div.appendChild(d);
+    d.innerHTML=`<span>${i}</span><strong>x${cart[i]}</strong>`;
+    c.appendChild(d);
   });
 }
 
-function updateSkin(){
-  const nick=document.getElementById('nick').value;
-  if(nick.length>0){
-    document.getElementById('skin').src=`https://mc-heads.net/avatar/${nick}`;
-  }
+function skin(){
+  const n=document.getElementById('nick').value;
+  if(n) document.getElementById('skin').src=`https://mc-heads.net/avatar/${n}`;
 }
 
-function pay(){
-  document.getElementById('modal').style.display='flex';
-}
-
-function closeModal(){
-  document.getElementById('modal').style.display='none';
-}
+function pay(){document.getElementById('modal').style.display='flex'}
+function closeModal(){document.getElementById('modal').style.display='none'}
 </script>
 
 </body>
